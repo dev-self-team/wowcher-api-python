@@ -2,41 +2,34 @@ import requests
 
 
 class WowcherApi:
-    ACTIVATION_ROUTE = '/ext/voucher/activate'
-    ACTIVATION_LIST_ROUTE = '/ext/voucher/activate/list'
+    ACTIVATION_VOUCHERS_ROUTE = '/ext/voucher/activate/list'
+    BASE_URL = 'https://wowcher.app'
 
-    def __init__(self, api_key, base_url='https://wowcher.app/'):
+    def __init__(self, api_key: str, base_url: str = BASE_URL):
         self.base_url = base_url
         self.api_url = f"{base_url}/api/v1"
         self.api_key = api_key
 
-    def activate_voucher(self, code) -> dict:
-        url = f'{self.api_url}{self.ACTIVATION_ROUTE}'
+    def activate_vouchers(self, codes: list) -> dict:
+        url = f'{self.api_url}{self.ACTIVATION_VOUCHERS_ROUTE}'
         headers = {
             "X-ApiKey": self.api_key
         }
 
-        return self.request(url, {"code": code}, headers=headers)
+        response = self.api_request(url, {"codes": codes}, headers=headers)
 
-    def activate_vouchers_list(self, codes: list) -> dict:
-        url = f'{self.api_url}{self.ACTIVATION_LIST_ROUTE}'
-        headers = {
-            "X-ApiKey": self.api_key
-        }
+        return response["data"]["items"]
 
-        return self.request(url, {"codes": codes}, headers=headers)
-
-    def get_frame_url(self, client_id, merchant_id, activation_callback_url):
-        url = f'{self.base_url}/en/payment-frame'
-        query = f'?client_id={client_id}&merchant_id={merchant_id}&activation_callback_url={activation_callback_url}'
-
-        return f'{url}{query}'
-
-    def request(self, url, json, headers=None):
+    @staticmethod
+    def api_request(url, json, headers=None):
         result = requests.post(url, json=json, headers=headers)
 
-        # check result data code
+        if result.status_code in [400, 401, 402, 403, 404]:
+            if result.headers and 'application/json' in result.headers.get('Content-Type'):
+                if result.json().get("message"):
+                    raise Exception(result.json().get("message"))
+
         if result.status_code != 200:
-            raise Exception("Invalid wowcher provider response")
+            raise Exception("Sorry, an unknown error has returned from the server. Please try again later.")
 
         return result.json()

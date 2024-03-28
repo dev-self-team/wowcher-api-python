@@ -1,8 +1,8 @@
 [project]
 name = "wowcher-api-python"
-version = "0.0.1"
+version = "1.0.0"
 authors = [
-    { name = "Sergey Gavrilov", email = "gavrilov@self.team" },
+    { name = "Self", email = "dev@self.team" },
 ]
 description = "Library for integration with Wowcher.App api application"
 readme = "README.md"
