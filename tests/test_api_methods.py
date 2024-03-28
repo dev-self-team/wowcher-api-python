@@ -8,7 +8,8 @@ def test_activate_vouchers(requests_mock):
         "items": [
             {
                 "code": code,
-                "value": 100
+                "value": 100,
+                "currency": "USD"
             } for code in codes
         ]
     }
@@ -27,15 +28,6 @@ def test_activate_vouchers(requests_mock):
 
     api = WowcherApi("api_key")
     result = api.activate_vouchers(codes)
-
-    data = {
-        "items": [
-            {
-                "code": code,
-                "value": 100
-            } for code in codes
-        ]
-    }
 
     assert result == data["items"]
 

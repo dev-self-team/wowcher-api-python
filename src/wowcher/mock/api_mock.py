@@ -9,7 +9,8 @@ class WowcherApiMock(WowcherApi):
             "data": {
                 "items": [{
                     "code": code,
-                    "value": 100
+                    "value": 100,
+                    "currency": "USD",
                 } for code in json["codes"]]
             }
         }
