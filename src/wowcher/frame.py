@@ -12,7 +12,8 @@ class WowcherPaymentFrame(WowcherApi):
             language: str = "en",
             countries: list = None,
             without_auth: bool = False,
-            auth_email: str = None
+            auth_email: str = None,
+            amount: int = 0
     ):
         url = f'{self.api_url}{self.GET_FRAME_LINK}'
         headers = {
@@ -23,7 +24,8 @@ class WowcherPaymentFrame(WowcherApi):
             "client_id": client_id,
             "merchant_id": merchant_id,
             "activation_callback_url": activation_callback_url,
-            "language": language
+            "language": language,
+            "amount": amount
         }
 
         if countries is not None:
