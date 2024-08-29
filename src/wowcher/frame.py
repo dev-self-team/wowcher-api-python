@@ -25,7 +25,7 @@ class WowcherPaymentFrame(WowcherApi):
             "merchant_id": merchant_id,
             "activation_callback_url": activation_callback_url,
             "language": language,
-            "amount": amount
+            "value": amount
         }
 
         if countries is not None:
