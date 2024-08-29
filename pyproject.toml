@@ -1,6 +1,6 @@
 [project]
 name = "wowcher-api-python"
-version = "1.0.3"
+version = "1.0.4"
 authors = [
     { name = "Self", email = "dev@self.team" },
 ]

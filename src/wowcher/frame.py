@@ -13,7 +13,7 @@ class WowcherPaymentFrame(WowcherApi):
             countries: list = None,
             without_auth: bool = False,
             auth_email: str = None,
-            amount: int = 0
+            amount: float = 0
     ):
         url = f'{self.api_url}{self.GET_FRAME_LINK}'
         headers = {
